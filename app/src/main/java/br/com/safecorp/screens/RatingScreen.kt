@@ -14,18 +14,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import br.com.safecorp.data.model.Assessment
+import br.com.safecorp.models.Avaliacao
 import br.com.safecorp.data.repository.AssessmentRepository
 import kotlinx.coroutines.launch
 
 @Composable
 fun RatingScreen(
     navController: NavController,
-    repository: AssessmentRepository
+    repository: AssessmentRepository,
+    token: String = "" // ⚡ Receber o token aqui (pode vir do MainActivity)
 ) {
     val scope = rememberCoroutineScope()
     var answers by remember { mutableStateOf(List(5) { 0 }) }
-    var assessment by remember { mutableStateOf<Assessment?>(null) }
+    var assessment by remember { mutableStateOf<Avaliacao?>(null) }
     var showResult by remember { mutableStateOf(false) }
 
     val questions = listOf(
@@ -78,7 +79,9 @@ fun RatingScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        assessment = repository.submitAssessment(answers)
+                        // ⚡ Convertemos Int para String
+                        val stringAnswers = answers.map { it.toString() }
+                        assessment = repository.submitAssessment(stringAnswers, token)
                         showResult = true
                     }
                 },
@@ -142,7 +145,7 @@ fun QuestionItem(
 }
 
 @Composable
-fun ResultCard(assessment: Assessment) {
+fun ResultCard(assessment: Avaliacao) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -160,18 +163,17 @@ fun ResultCard(assessment: Assessment) {
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = "Nota: ${assessment.score}/25",
+                text = "Pergunta 1: ${assessment.pergunta1}",
                 color = Color.White,
                 fontSize = 16.sp
             )
             Text(
-                text = "Sugestão:",
+                text = "Pergunta 2: ${assessment.pergunta2}",
                 color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 16.sp
             )
             Text(
-                text = assessment.suggestion,
+                text = "Pergunta 3: ${assessment.pergunta3}",
                 color = Color.White,
                 fontSize = 16.sp
             )
