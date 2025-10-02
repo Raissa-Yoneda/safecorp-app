@@ -1,9 +1,14 @@
-const express = require('express');
+// backend/src/routes/selfCheckRoutes.js
+const express = require("express");
 const router = express.Router();
-const auth = require('../middleware/auth');
-const { createHumor, getHumor } = require('../controllers/selfCheckController');
+const auth = require("../middleware/auth");
+const { createSelfCheck, getSelfChecks } = require("../controllers/selfCheckController");
 
-router.post('/humor', auth, createHumor);
-router.get('/humor', auth, getHumor);
+// POST /api/humor → registrar check-in de humor
+router.post("/", auth, createSelfCheck);
+
+// GET /api/humor → listar check-ins
+router.get("/", auth, getSelfChecks);
 
 module.exports = router;
+

@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const { getApoio } = require('../controllers/supportController');
 
-router.get('/apoio', auth, getApoio);
+// antes: router.get('/apoio', auth, getApoio);
+// depois: apenas router.get('/', auth, getApoio);
+router.get('/', auth, getApoio); // GET /api/apoio
 
 module.exports = router;

@@ -29,10 +29,10 @@ app.get("/", (req, res) => {
 });
 
 // rotas da API
-app.use("/api", authRoutes);         // POST /api/auth
-app.use("/api", avaliacaoRoutes);    // POST/GET /api/avaliacoes
-app.use("/api", selfCheckRoutes);    // POST/GET /api/humor
-app.use("/api", supportRoutes);      // GET /api/apoio
+app.use("/api/auth", authRoutes);        // POST /api/auth
+app.use("/api/avaliacoes", avaliacaoRoutes);    // POST/GET /api/avaliacoes
+app.use("/api/humor", selfCheckRoutes);        // POST/GET /api/humor
+app.use("/api/apoio", supportRoutes);          // GET /api/apoio
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));

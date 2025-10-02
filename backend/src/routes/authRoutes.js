@@ -1,4 +1,4 @@
-// src/routes/authRoutes.js
+// backend/src/routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
@@ -11,8 +11,18 @@ router.post('/', (req, res) => {
     return res.status(400).json({ msg: 'Informe usuarioAnonimo' });
   }
 
-  const token = jwt.sign({ usuarioAnonimo }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  res.json({ token });
+  try {
+    const token = jwt.sign(
+      { usuarioAnonimo },
+      process.env.JWT_SECRET, // certifique-se de ter JWT_SECRET no seu .env
+      { expiresIn: '1h' }
+    );
+
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: 'Erro ao gerar token' });
+  }
 });
 
 module.exports = router;
