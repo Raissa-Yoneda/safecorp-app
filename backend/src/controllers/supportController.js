@@ -1,8 +1,10 @@
-const Support = require('../models/Support');
+const supportService = require('../services/supportService');
 
 exports.getApoio = async (req, res) => {
   try {
-    const recursos = await Support.find();
+    const usuarioAnonimo = req.usuarioAnonimo;
+    const recursos = await supportService.getApoio(usuarioAnonimo);
+
     res.json(recursos);
   } catch (err) {
     console.error(err);

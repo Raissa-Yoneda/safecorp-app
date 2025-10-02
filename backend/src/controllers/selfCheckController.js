@@ -1,11 +1,10 @@
-// backend/src/controllers/selfCheckController.js
-const SelfCheck = require('../models/SelfCheck');
+const selfCheckService = require('../services/selfCheckService');
 
-// Registrar check-in de humor
 exports.createSelfCheck = async (req, res) => {
   try {
-    const usuarioAnonimo = req.usuarioAnonimo; // obtido do middleware auth
-    const selfCheck = await SelfCheck.create({ ...req.body, usuarioAnonimo });
+    const usuarioAnonimo = req.usuarioAnonimo;
+    const selfCheck = await selfCheckService.createHumor(usuarioAnonimo, req.body);
+
     res.status(201).json({ message: "Check-in de humor registrado com sucesso", selfCheck });
   } catch (err) {
     console.error(err);
@@ -13,10 +12,11 @@ exports.createSelfCheck = async (req, res) => {
   }
 };
 
-// Listar check-ins de humor
 exports.getSelfChecks = async (req, res) => {
   try {
-    const historico = await SelfCheck.find().sort({ createdAt: -1 });
+    const usuarioAnonimo = req.usuarioAnonimo;
+    const historico = await selfCheckService.getHumor(usuarioAnonimo);
+
     res.json(historico);
   } catch (err) {
     console.error(err);

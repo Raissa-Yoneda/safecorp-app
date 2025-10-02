@@ -1,9 +1,12 @@
-const Avaliacao = require('../models/Avaliacao');
+const avaliacaoService = require('../services/avaliacaoService');
 
 exports.createAvaliacao = async (req, res) => {
   try {
     const usuarioAnonimo = req.usuarioAnonimo;
-    const avaliacao = await Avaliacao.create({ ...req.body, usuarioAnonimo });
+    const respostas = req.body.respostas;
+
+    const avaliacao = await avaliacaoService.createAvaliacao(usuarioAnonimo, respostas);
+
     res.status(201).json({ message: "Avaliação salva com sucesso", avaliacao });
   } catch (err) {
     console.error(err);
@@ -13,7 +16,9 @@ exports.createAvaliacao = async (req, res) => {
 
 exports.getAvaliacoes = async (req, res) => {
   try {
-    const avaliacoes = await Avaliacao.find().sort({ createdAt: -1 });
+    const usuarioAnonimo = req.usuarioAnonimo;
+    const avaliacoes = await avaliacaoService.getAvaliacoes(usuarioAnonimo);
+
     res.json(avaliacoes);
   } catch (err) {
     console.error(err);

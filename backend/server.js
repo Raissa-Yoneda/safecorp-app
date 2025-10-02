@@ -10,6 +10,7 @@ const avaliacaoRoutes = require("./src/routes/avaliacaoRoutes");
 const selfCheckRoutes = require("./src/routes/selfCheckRoutes");
 const supportRoutes = require("./src/routes/supportRoutes");
 const authRoutes = require("./src/routes/authRoutes"); // rota para gerar token JWT
+const alertRoutes = require("./src/routes/alertRoutes");
 
 dotenv.config();
 
@@ -29,10 +30,16 @@ app.get("/", (req, res) => {
 });
 
 // rotas da API
-app.use("/api/auth", authRoutes);        // POST /api/auth
-app.use("/api/avaliacoes", avaliacaoRoutes);    // POST/GET /api/avaliacoes
-app.use("/api/humor", selfCheckRoutes);        // POST/GET /api/humor
-app.use("/api/apoio", supportRoutes);          // GET /api/apoio
+app.use("/api/auth", authRoutes);            // POST /api/auth
+app.use("/api/avaliacoes", avaliacaoRoutes); // POST/GET /api/avaliacoes
+app.use("/api/humor", selfCheckRoutes);      // POST/GET /api/humor
+app.use("/api/apoio", supportRoutes);        // GET /api/apoio
+app.use("/api/alertas", alertRoutes);        // GET /api/alertas
+
+// tratar rotas não encontradas
+app.use((req, res) => {
+  res.status(404).json({ error: "Rota não encontrada" });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
