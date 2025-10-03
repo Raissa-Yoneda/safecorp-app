@@ -22,7 +22,6 @@ import br.com.safecorp.screens.*
 import br.com.safecorp.ui.theme.SafeCorpTheme
 import br.com.safecorp.viewmodel.SelfCheckViewModel
 import br.com.safecorp.viewmodel.SupportViewModel
-import br.com.safecorp.data.api.SupportApi
 
 class MainActivity : ComponentActivity() {
 
@@ -39,7 +38,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     val context = LocalContext.current
 
-                    // Inicializa database e repositorios
+                    // Inicializa database e repositórios
                     val database = AppDatabase.getDatabase(context)
                     val assessmentRepository =
                         AssessmentRepository(database.assessmentDao(), RetrofitClient.assessmentApi)
@@ -49,25 +48,33 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = "welcome"
+                        startDestination = "welcome" // Abre na tela de boas-vindas
                     ) {
                         composable("welcome") { WelcomeScreen(navController) }
                         composable("login") { LoginScreen(navController = navController) }
                         composable("menu") { MenuScreen(navController) }
                         composable("meditation") { MeditationScreen(navController) }
-                        composable("rating") { RatingScreen(navController, assessmentRepository) }
+
+                        // RatingScreen com navController e repository corretos
+                        composable("rating") {
+                            RatingScreen(
+                                navController = navController,
+                                repository = assessmentRepository
+                                // token padrão do RatingScreen será usado
+                            )
+                        }
+
                         composable("self_check") {
                             val viewModel: SelfCheckViewModel = viewModel(
                                 factory = SelfCheckViewModel.Factory(selfCheckRepository)
                             )
                             SelfCheckScreen(navController, viewModel)
                         }
+
                         composable("support") {
-                            val viewModel: SupportViewModel = viewModel(
-                                factory = SupportViewModel.Factory(RetrofitClient.supportApi)
-                            )
-                            SupportScreen(navController, viewModel)
+                            SupportScreen()
                         }
+
                         composable("dashboard") {
                             val viewModel: SelfCheckViewModel = viewModel(
                                 factory = SelfCheckViewModel.Factory(selfCheckRepository)

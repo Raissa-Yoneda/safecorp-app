@@ -11,8 +11,7 @@ class SupportRepository(private val supportApi: SupportApi) {
             val resources = supportApi.getSupportResources()
             emit(resources)
         } catch (e: Exception) {
-            // Em caso de erro: emit empty list
             emit(emptyList())
         }
     }
-} 
+}

@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SupportViewModel(
-    private val supportApi: SupportApi
-) : ViewModel() {
+class SupportViewModel(private val supportApi: SupportApi) : ViewModel() {
+
     private val _supportResources = MutableStateFlow<List<SupportResource>>(emptyList())
     val supportResources: StateFlow<List<SupportResource>> = _supportResources
 
@@ -29,7 +28,7 @@ class SupportViewModel(
                 val resources = supportApi.getSupportResources()
                 _supportResources.value = resources
             } catch (e: Exception) {
-                // Lida com o erro
+                _supportResources.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
@@ -45,4 +44,4 @@ class SupportViewModel(
             throw IllegalArgumentException("Unknown ViewModel class")
         }
     }
-} 
+}

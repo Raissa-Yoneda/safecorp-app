@@ -1,6 +1,7 @@
 package br.com.safecorp.data.api
 
 import br.com.safecorp.models.Avaliacao
+import br.com.safecorp.data.model.AvaliacaoRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -11,7 +12,7 @@ interface AssessmentApi {
     @POST("avaliacoes")
     suspend fun submitAssessment(
         @Header("Authorization") token: String,
-        @Body avaliacao: Avaliacao
+        @Body avaliacaoRequest: AvaliacaoRequest
     ): Avaliacao
 
     @GET("avaliacoes")

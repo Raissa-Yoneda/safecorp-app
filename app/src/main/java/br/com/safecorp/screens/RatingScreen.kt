@@ -1,5 +1,6 @@
 package br.com.safecorp.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,28 +14,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
-import br.com.safecorp.models.Avaliacao
 import br.com.safecorp.data.repository.AssessmentRepository
+import br.com.safecorp.models.Avaliacao
 import kotlinx.coroutines.launch
 
 @Composable
 fun RatingScreen(
     navController: NavController,
     repository: AssessmentRepository,
-    token: String = "" // Recebe o token
+    token: String = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvQW5vbmltbyI6InVzZXIxMjMiLCJpYXQiOjE3NTk0NjIxMDIsImV4cCI6MTc1OTQ2NTcwMn0.xycAVEk6QwjrmuxGMUJRf_oXmhHuET3pUrRzA1tcAhY"
 ) {
     val scope = rememberCoroutineScope()
-    var answers by remember { mutableStateOf(List(5) { 0 }) }
+    val context = LocalContext.current
+
+    var answers by remember { mutableStateOf(List(3) { 0 }) }
     var assessment by remember { mutableStateOf<Avaliacao?>(null) }
     var showResult by remember { mutableStateOf(false) }
 
     val questions = listOf(
         "Com que frequência você sente que precisa esconder suas emoções no ambiente de trabalho?",
         "Com que frequência você se sente valorizado pelo seu trabalho?",
-        "Com que frequência você sente que pode fazer pausas sem culpa durante o expediente?",
-        "Com que frequência você leva preocupações do trabalho para casa?",
-        "Com que frequência você sente que seu bem-estar mental é uma prioridade para a empresa?"
+        "Com que frequência você sente que pode fazer pausas sem culpa durante o expediente?"
     )
 
     Box(
@@ -69,9 +71,7 @@ fun RatingScreen(
                     question = question,
                     selectedValue = answers[index],
                     onValueChange = { newValue ->
-                        answers = answers.toMutableList().apply {
-                            set(index, newValue)
-                        }
+                        answers = answers.toMutableList().apply { set(index, newValue) }
                     }
                 )
             }
@@ -79,9 +79,18 @@ fun RatingScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        val stringAnswers = answers.map { it.toString() }
-                        assessment = repository.submitAssessment(stringAnswers, token)
-                        showResult = true
+                        try {
+                            // Envia a avaliação usando o repository
+                            assessment = repository.submitAssessment(
+                                answers.map { it.toString() },
+                                token
+                            )
+                            showResult = true
+                            Toast.makeText(context, "Avaliação enviada com sucesso!", Toast.LENGTH_SHORT).show()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Toast.makeText(context, "Erro ao enviar avaliação", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -90,7 +99,7 @@ fun RatingScreen(
             }
 
             if (showResult && assessment != null) {
-                ResultCard(assessment = assessment!!)
+                ResultCard(assessment!!)
             }
         }
     }
@@ -161,21 +170,9 @@ fun ResultCard(assessment: Avaliacao) {
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-            Text(
-                text = "Pergunta 1: ${assessment.pergunta1}",
-                color = Color.White,
-                fontSize = 16.sp
-            )
-            Text(
-                text = "Pergunta 2: ${assessment.pergunta2}",
-                color = Color.White,
-                fontSize = 16.sp
-            )
-            Text(
-                text = "Pergunta 3: ${assessment.pergunta3}",
-                color = Color.White,
-                fontSize = 16.sp
-            )
+            Text("Pergunta 1: ${assessment.pergunta1}", color = Color.White, fontSize = 16.sp)
+            Text("Pergunta 2: ${assessment.pergunta2}", color = Color.White, fontSize = 16.sp)
+            Text("Pergunta 3: ${assessment.pergunta3}", color = Color.White, fontSize = 16.sp)
         }
     }
 }

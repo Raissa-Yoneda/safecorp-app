@@ -1,9 +1,12 @@
 package br.com.safecorp.data.model
 
+import com.google.gson.annotations.SerializedName
+
 data class SupportResource(
-    val id: Int,
+    @SerializedName("_id")
+    val id: String,
+    @SerializedName("nome")
     val title: String,
-    val description: String,
-    val contactInfo: String,
-    val type: String // ex: "Crises", "Conselho", "Emergencia"
-) 
+    @SerializedName("link")
+    val contactInfo: String?
+)
