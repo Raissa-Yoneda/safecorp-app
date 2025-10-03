@@ -7,9 +7,9 @@ import kotlinx.coroutines.delay
 class MockAssessmentApi : AssessmentApi {
 
     override suspend fun submitAssessment(token: String, avaliacao: AvaliacaoRequest): Avaliacao {
-        delay(1000) // simula tempo de rede
+        delay(1000)
 
-        // Simulação de lógica de avaliação: contar "Sim" nas respostas
+        // Simulando lógica de avaliação: conta "Sim" nas respostas
         val score = listOfNotNull(
             avaliacao.respostas.pergunta1,
             avaliacao.respostas.pergunta2,
@@ -33,7 +33,7 @@ class MockAssessmentApi : AssessmentApi {
     }
 
     override suspend fun getAssessments(token: String): List<Avaliacao> {
-        delay(500) // simula tempo de rede
+        delay(500)
 
         return listOf(
             Avaliacao("Sim", "Não", "Talvez", "2025-10-01", "1"),

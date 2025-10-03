@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    // Auth: gera um token
+    // Auth gera um token
     @POST("auth")
     fun loginAnonimo(): Call<TokenResponse>
 
@@ -37,7 +37,9 @@ interface ApiService {
         @Header("Authorization") authHeader: String
     ): Call<List<SelfCheck>>
 
-    // Apoio (esse não precisa de token)
+    // Apoio
     @GET("apoio")
-    fun listarApoio(): Call<List<Support>>
+    fun listarApoio(
+        @Header("Authorization") authHeader: String
+    ): Call<List<Support>>
 }

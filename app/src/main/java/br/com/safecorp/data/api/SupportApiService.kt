@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object SupportApiService {
-    private const val BASE_URL = "http://10.0.2.2:3000/" // Para emulador Android
+    private const val BASE_URL = "http://10.0.2.2:3000/api/"
 
     val api: SupportApi by lazy {
         Retrofit.Builder()

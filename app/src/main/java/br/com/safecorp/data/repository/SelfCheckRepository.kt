@@ -27,7 +27,7 @@ class SelfCheckRepository(
                 selfCheckDao.insertSelfCheck(selfCheck)
                 return "Check-in salvo com sucesso!"
             } else {
-                // If API fails but returns a response, save locally anyway
+                // Se a API falhar mas retornar uma resposta, ele é salvo localmente
                 selfCheckDao.insertSelfCheck(selfCheck)
                 return "Check-in salvo localmente. ${response.message}"
             }

@@ -12,7 +12,7 @@ class AssessmentRepository(
     private val assessmentApi: AssessmentApi
 ) {
 
-    // Função para enviar avaliação com logs detalhados
+    // Função que envia avaliação com logs detalhados
     suspend fun submitAssessment(answers: List<String>, token: String): Avaliacao? {
         val request = AvaliacaoRequest(
             respostas = Respostas(
@@ -39,7 +39,7 @@ class AssessmentRepository(
             println("HttpException ao enviar avaliação: ${e.code()} - ${e.message()}")
             e.printStackTrace()
         } catch (e: Exception) {
-            // Qualquer outro erro
+            // Para outro erro
             println("Erro ao enviar avaliação: ${e.localizedMessage}")
             e.printStackTrace()
         }
@@ -47,7 +47,7 @@ class AssessmentRepository(
         return null
     }
 
-    // Função para buscar avaliações
+    // Função que busca avaliações
     suspend fun getAssessments(token: String): List<Avaliacao> {
         return assessmentApi.getAssessments("Bearer $token")
     }

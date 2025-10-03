@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import br.com.safecorp.data.api.SupportApi
 import br.com.safecorp.data.model.SupportResource
+import br.com.safecorp.network.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import android.util.Log
 
 class SupportViewModel(private val supportApi: SupportApi) : ViewModel() {
 
@@ -25,9 +27,11 @@ class SupportViewModel(private val supportApi: SupportApi) : ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                val resources = supportApi.getSupportResources()
+                val resources = supportApi.getSupportResources("Bearer ${RetrofitClient.JWT_TOKEN}")
+                Log.d("SupportViewModel", "Resources fetched: $resources")
                 _supportResources.value = resources
             } catch (e: Exception) {
+                Log.e("SupportViewModel", "Error fetching support resources", e)
                 _supportResources.value = emptyList()
             } finally {
                 _isLoading.value = false

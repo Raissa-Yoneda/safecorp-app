@@ -4,9 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class SupportResource(
     @SerializedName("_id")
-    val id: String,
+    val id: String? = null,
+
     @SerializedName("nome")
     val title: String,
+
     @SerializedName("link")
-    val contactInfo: String?
+    val contactInfo: String
 )

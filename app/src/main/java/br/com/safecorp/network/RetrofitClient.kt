@@ -14,8 +14,8 @@ import retrofit2.http.POST
 
 object RetrofitClient {
 
-    // Substitua pelo token JWT que você gerou no Postman
-    private const val JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvQW5vbmltbyI6InVzZXIxMjMiLCJpYXQiOjE3NTk1MjQzNTEsImV4cCI6MTc1OTUyNzk1MX0.xKBriuAwIuyYUfyvOuh1ROh1J_fmlrjPRlj4VNsaa6g"
+    // JWT que gera no Postman
+    const val JWT_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvQW5vbmltbyI6InVzZXIxMjMiLCJpYXQiOjE3NTk1MzE5MzksImV4cCI6MTc1OTUzNTUzOX0.7ZRFbovUN3ZW7fZImtByUrHbrRah3sXUv3g-DCo8bUY"
 
     private const val BASE_URL = "http://10.0.2.2:3000/api/"
 
@@ -38,7 +38,7 @@ object RetrofitClient {
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client) // <-- cliente com token
+            .client(client) // cliente com token
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
