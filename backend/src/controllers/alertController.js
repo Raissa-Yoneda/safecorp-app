@@ -1,4 +1,3 @@
-// src/controllers/alertController.js
 const Log = require('../models/Log');
 
 exports.getAlertas = async (req, res) => {

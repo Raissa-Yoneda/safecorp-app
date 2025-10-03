@@ -29,7 +29,7 @@ class SupportViewModel(
                 val resources = supportApi.getSupportResources()
                 _supportResources.value = resources
             } catch (e: Exception) {
-                // Handle error
+                // Lida com o erro
             } finally {
                 _isLoading.value = false
             }

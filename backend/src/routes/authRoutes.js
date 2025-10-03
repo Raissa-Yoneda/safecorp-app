@@ -1,9 +1,8 @@
-// backend/src/routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 
-// POST /api/auth → gera token JWT anônimo
+// POST /api/auth: gera um token JWT anônimo
 router.post('/', (req, res) => {
   const { usuarioAnonimo } = req.body;
 
@@ -14,7 +13,7 @@ router.post('/', (req, res) => {
   try {
     const token = jwt.sign(
       { usuarioAnonimo },
-      process.env.JWT_SECRET, // certifique-se de ter JWT_SECRET no seu .env
+      process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
 

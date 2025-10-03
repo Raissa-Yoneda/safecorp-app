@@ -1,4 +1,3 @@
-// src/services/selfCheckService.js
 const SelfCheck = require('../models/SelfCheck');
 const Log = require('../models/Log');
 

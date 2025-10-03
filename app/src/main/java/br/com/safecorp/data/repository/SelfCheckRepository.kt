@@ -21,7 +21,7 @@ class SelfCheckRepository(
         )
         
         try {
-            // Try to submit to API
+            // Tenta submeter para a API
             val response = selfCheckApi.submitSelfCheck(SelfCheckRequest(mood, note))
             if (response.success) {
                 selfCheckDao.insertSelfCheck(selfCheck)
@@ -32,7 +32,7 @@ class SelfCheckRepository(
                 return "Check-in salvo localmente. ${response.message}"
             }
         } catch (e: Exception) {
-            // If API call fails completely, save locally
+            // Se a chamada para a API falhar, ele salva localmente
             selfCheckDao.insertSelfCheck(selfCheck)
             return "Check-in salvo localmente. Não foi possível sincronizar com o servidor."
         }

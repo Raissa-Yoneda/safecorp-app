@@ -1,4 +1,3 @@
-// src/services/avaliacaoService.js
 const Avaliacao = require('../models/Avaliacao');
 const Log = require('../models/Log');
 

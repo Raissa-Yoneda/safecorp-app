@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 fun RatingScreen(
     navController: NavController,
     repository: AssessmentRepository,
-    token: String = "" // ⚡ Receber o token aqui (pode vir do MainActivity)
+    token: String = "" // Recebe o token
 ) {
     val scope = rememberCoroutineScope()
     var answers by remember { mutableStateOf(List(5) { 0 }) }
@@ -79,7 +79,6 @@ fun RatingScreen(
             Button(
                 onClick = {
                     scope.launch {
-                        // ⚡ Convertemos Int para String
                         val stringAnswers = answers.map { it.toString() }
                         assessment = repository.submitAssessment(stringAnswers, token)
                         showResult = true

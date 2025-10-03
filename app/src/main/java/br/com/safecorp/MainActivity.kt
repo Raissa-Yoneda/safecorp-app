@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     val context = LocalContext.current
 
-                    // Inicializar database e repositories
+                    // Inicializa database e repositorios
                     val database = AppDatabase.getDatabase(context)
                     val assessmentRepository =
                         AssessmentRepository(database.assessmentDao(), RetrofitClient.assessmentApi)

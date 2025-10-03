@@ -1,4 +1,3 @@
-// src/services/supportService.js
 const Support = require('../models/Support');
 const Log = require('../models/Log');
 

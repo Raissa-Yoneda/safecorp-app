@@ -1,4 +1,3 @@
-// src/services/alertService.js
 const Log = require('../models/Log');
 
 const alertas = [

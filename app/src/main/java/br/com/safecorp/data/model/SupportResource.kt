@@ -5,5 +5,5 @@ data class SupportResource(
     val title: String,
     val description: String,
     val contactInfo: String,
-    val type: String // e.g., "Crisis", "Counseling", "Emergency"
+    val type: String // ex: "Crises", "Conselho", "Emergencia"
 ) 

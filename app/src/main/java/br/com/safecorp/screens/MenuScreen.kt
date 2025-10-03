@@ -49,7 +49,7 @@ fun MenuScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
         while (true) {
-            delay(5000) // 5 seconds
+            delay(5000) // 5 segundos
             currentMessageIndex = (currentMessageIndex + 1) % motivationalMessages.size
         }
     }

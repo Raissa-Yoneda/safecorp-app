@@ -9,11 +9,11 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    // 1️⃣ Auth - gerar token
+    // Auth: gera um token
     @POST("auth")
     fun loginAnonimo(): Call<TokenResponse>
 
-    // 2️⃣ Avaliações
+    // Avaliações
     @POST("avaliacoes")
     fun criarAvaliacao(
         @Body avaliacao: Avaliacao,
@@ -25,7 +25,7 @@ interface ApiService {
         @Header("Authorization") authHeader: String
     ): Call<List<Avaliacao>>
 
-    // 3️⃣ Humor
+    // Humor
     @POST("humor")
     fun registrarHumor(
         @Body humor: SelfCheck,
@@ -37,7 +37,7 @@ interface ApiService {
         @Header("Authorization") authHeader: String
     ): Call<List<SelfCheck>>
 
-    // 4️⃣ Apoio (não precisa de token)
+    // Apoio (esse não precisa de token)
     @GET("apoio")
     fun listarApoio(): Call<List<Support>>
 }

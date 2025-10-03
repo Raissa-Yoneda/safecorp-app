@@ -2,10 +2,10 @@ package br.com.safecorp.data.api
 
 class MockSelfCheckApi : SelfCheckApi {
     override suspend fun submitSelfCheck(request: SelfCheckRequest): SelfCheckResponse {
-        // Simulate network delay
+        // Simula network delay
         kotlinx.coroutines.delay(1000)
         
-        // Generate a random success message based on the mood
+        // Gera um random de success message baseada no mood
         val message = when (request.mood) {
             "😊" -> "Great to see you're feeling happy! Keep spreading that positivity!"
             "😐" -> "It's okay to feel neutral. Remember that emotions are temporary."

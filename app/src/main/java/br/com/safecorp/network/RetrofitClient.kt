@@ -20,7 +20,7 @@ object RetrofitClient {
             .build()
     }
 
-    // Serviços criados a partir das interfaces corretas em br.com.safecorp.data.api
+    // Serviços criados
     val assessmentApi: AssessmentApi by lazy {
         retrofit.create(AssessmentApi::class.java)
     }

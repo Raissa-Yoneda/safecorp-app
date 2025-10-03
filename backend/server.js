@@ -1,15 +1,14 @@
-// backend/server.js
 const express = require("express");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./src/config/db");
 
-// importar rotas
+// importando as rotas
 const avaliacaoRoutes = require("./src/routes/avaliacaoRoutes");
 const selfCheckRoutes = require("./src/routes/selfCheckRoutes");
 const supportRoutes = require("./src/routes/supportRoutes");
-const authRoutes = require("./src/routes/authRoutes"); // rota para gerar token JWT
+const authRoutes = require("./src/routes/authRoutes");
 const alertRoutes = require("./src/routes/alertRoutes");
 
 dotenv.config();
@@ -21,7 +20,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-// conectar no MongoDB
+// conecta no MongoDB
 connectDB();
 
 // rota raiz
@@ -36,7 +35,7 @@ app.use("/api/humor", selfCheckRoutes);      // POST/GET /api/humor
 app.use("/api/apoio", supportRoutes);        // GET /api/apoio
 app.use("/api/alertas", alertRoutes);        // GET /api/alertas
 
-// tratar rotas não encontradas
+// trata rotas não encontradas
 app.use((req, res) => {
   res.status(404).json({ error: "Rota não encontrada" });
 });

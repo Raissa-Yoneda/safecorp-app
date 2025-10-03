@@ -22,9 +22,6 @@ class AssessmentRepository(
         // Chamada suspensa para API
         val saved = assessmentApi.submitAssessment("Bearer $token", avaliacao)
 
-        // Aqui você pode salvar no banco local
-        // assessmentDao.insertAssessment(saved)
-
         return saved
     }
 

@@ -65,7 +65,7 @@ fun SelfCheckScreen(
             }
 
             item {
-                // Mood selection
+                // Seleciona o mood
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -83,7 +83,7 @@ fun SelfCheckScreen(
             }
 
             item {
-                // Note input
+                // Nota de input
                 OutlinedTextField(
                     value = note,
                     onValueChange = { note = it },
@@ -102,7 +102,7 @@ fun SelfCheckScreen(
             }
 
             item {
-                // Save button
+                // Botao de salvar
                 Button(
                     onClick = {
                         selectedMood?.let { mood ->
@@ -118,7 +118,7 @@ fun SelfCheckScreen(
                 }
             }
 
-            // API Response Message
+            // Mensagem de resposta da API
             message?.let { msg ->
                 item {
                     Card(
