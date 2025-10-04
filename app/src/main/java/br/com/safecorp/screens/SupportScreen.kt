@@ -11,41 +11,53 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 
-// Modelo de recurso de suporte
 data class SupportItem(
     val id: String,
     val nome: String,
-    val descricao: String,
-    val link: String? = null // link opcional
+    val descricao: androidx.compose.ui.text.AnnotatedString,
+    val link: String? = null
 )
 
 @Composable
 fun SupportScreen() {
     val context = LocalContext.current
 
-    // Lista de recursos hardcoded
     val supportItems = listOf(
         SupportItem(
             id = "68d7521d84a14cc04c37d711",
             nome = "Chat de Apoio 24h",
-            descricao = "Converse com um profissional disponível 24h para apoio emocional.",
+            descricao = buildAnnotatedString {
+                append("Converse com um profissional disponível 24h para apoio emocional.")
+            },
             link = "https://cvv.org.br/"
-        ),
-        SupportItem(
-            id = "68d7521d84a14cc04c37d712",
-            nome = "Canal de Sugestões",
-            descricao = "Envie sugestões ou dúvidas sobre bem-estar e saúde mental."
         ),
         SupportItem(
             id = "68d7521d84a14cc04c37d713",
             nome = "Ações Recomendadas",
-            descricao = "Pratique exercícios de respiração e mindfulness diariamente."
+            descricao = buildAnnotatedString {
+                appendBold("Respiração guiada\n")
+                append("Exercício de respiração 4-4-4 (inspirar 4s, segurar 4s, expirar 4s).\n" +
+                        "Ou respiração profunda com áudio/vibração para marcar o ritmo.\n\n")
+
+                appendBold("Técnica 5-4-3-2-1 (Grounding)\n")
+                append("Identificar 5 coisas que vê, 4 que pode tocar, 3 que pode ouvir, 2 que pode cheirar, 1 que pode saborear.\n" +
+                        "Ajuda a trazer foco para o presente.\n\n")
+
+                appendBold("Alongamento leve\n")
+                append("Movimentar braços, pescoço e ombros para liberar tensão física.\n" +
+                        "Um mini-guia visual pode ajudar.\n\n")
+
+                appendBold("Escuta consciente\n")
+                append("Colocar um som calmante (chuva, natureza, música relaxante).\n" +
+                        "Convidar a pessoa a fechar os olhos e focar só no som.\n")
+            }
         )
     )
 
@@ -85,16 +97,16 @@ fun SupportScreen() {
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
                             text = item.descricao,
                             color = Color.White.copy(alpha = 0.7f),
-                            fontSize = 14.sp
+                            fontSize = 14.sp,
+                            lineHeight = 20.sp
                         )
 
-                        // Botão só aparece se houver link válido
                         item.link?.let { link ->
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
                             Button(
                                 onClick = {
                                     val intent = Intent(Intent.ACTION_VIEW, link.toUri())
@@ -115,4 +127,11 @@ fun SupportScreen() {
             }
         }
     }
+}
+
+// Função de extensão para negrito
+fun androidx.compose.ui.text.AnnotatedString.Builder.appendBold(text: String) {
+    pushStyle(SpanStyle(fontWeight = FontWeight.Bold))
+    append(text)
+    pop()
 }
